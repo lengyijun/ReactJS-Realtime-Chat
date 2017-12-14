@@ -3,11 +3,15 @@
  * File to update store state based on called actions 
  */
 import { POST_MESSAGES ,ADD_USER,INIT_USER} from '../actions/actionTypes'
+import emoji from 'node-emoji'
+
+var emojified = emoji.emojify('I :unknown_emoji: :star: :another_one:',function(name){return name});
 
 const initialState = {
     user: [],
     message: [{
-        message: 'How do I use this messaging app?',
+        message: emojified,
+        // message: 'How do I use this messaging app?',
         from: 'right',
         backColor: '#3d83fa',
         textColor: "white",
@@ -22,10 +26,12 @@ export default function chatOperations(state = initialState, action) {
     switch (action.type) {
         case POST_MESSAGES:
             console.log("switch post message")
+            var a= emoji.emojify(action.message,function(name){return name});
             return {
                 ...state,
                 message:[...state.message,{
-                    message: action.message,
+                    message:a,
+                    // message:state.message,
                     from: 'right',
                     backColor: "green",
                     textColor: "white",
