@@ -34,18 +34,18 @@ export default function chatOperations(state = initialState, action) {
                     inbound: false
                 }]
             }
-        // case ADD_USER:
-        //     console.log("switch add user")
-        //     return{
-        //         ...state,
-        //         user:[...state.user,action.user]
-        //     }
-        // case INIT_USER:
-        //     console.log("switch init user")
-        //     return{
-        //         ...state,
-        //         user:action.userlist
-        //     }
+        case ADD_USER:
+            console.log("switch add user")
+            return{
+                ...state,
+                user:[...state.user,action.user]
+            }
+        case INIT_USER:
+            console.log("switch init user")
+            return{
+                ...state,
+                user:action.userlist
+            }
         
         default:
             console.log("switch default")

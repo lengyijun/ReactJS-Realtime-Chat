@@ -19,10 +19,17 @@ class App extends Component {
     console.log(this.props.globalstate)
 		socket.on('init', this._initialize.bind(this));
 		socket.on('send:message', this._messageRecieve.bind(this));
-		// socket.on('user:join', this._userJoined.bind(this));
+		socket.on('user:join', this._userJoined.bind(this));
 		// socket.on('user:left', this._userLeft.bind(this));
 		// socket.on('change:name', this._userChangedName.bind(this));
   }
+
+  _userJoined(data){
+    console.log("user joined")
+    console.log(data)
+    this.props.actions.addUser(data.name)
+  }
+
   _messageRecieve(message){ //todo,not complete
     console.log("============")
     console.log(message)
@@ -33,13 +40,9 @@ class App extends Component {
     console.log("initial")
     console.log(data)
     console.log(typeof data)
-    this.props.actions.initialUser(data)
+    this.props.actions.initialUser(data.users)
   }
 
-  _initialize(data){
-    // todo
-    var {user,name}=data;
-  }
   render() {
     return (
       <div className="App">
