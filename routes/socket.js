@@ -65,6 +65,9 @@ module.exports = function (socket) {
 
   // broadcast a user's message to other users
   socket.on('send:message', function (data) {
+    console.log("send message")
+    console.log(data)
+    console.log("\n")
     socket.broadcast.emit('send:message', {
       user: name,
       text: data.text
@@ -92,6 +95,7 @@ module.exports = function (socket) {
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
+    console.log("some one disconnect")
     socket.broadcast.emit('user:left', {
       name: name
     });

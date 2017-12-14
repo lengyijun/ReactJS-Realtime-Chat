@@ -1,0 +1,8 @@
+.groupChatContainer{
+    border: 5px darkred;
+    border-radius: 5px;
+    background-color:lightgray;
+}
+.groupChatText{
+    padding: 0.2vh;
+}

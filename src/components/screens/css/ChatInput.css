@@ -1,0 +1,8 @@
+.messageValueInput{
+    margin: 1vw;
+    width:20vw;
+}
+.userContainer{
+    flex: 1;
+    min-height: 25vh;
+}
