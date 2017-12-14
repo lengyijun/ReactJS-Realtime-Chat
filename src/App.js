@@ -20,8 +20,14 @@ class App extends Component {
 		socket.on('init', this._initialize.bind(this));
 		socket.on('send:message', this._messageRecieve.bind(this));
 		socket.on('user:join', this._userJoined.bind(this));
-		// socket.on('user:left', this._userLeft.bind(this));
+		socket.on('user:left', this._userLeft.bind(this));
 		// socket.on('change:name', this._userChangedName.bind(this));
+  }
+
+  _userLeft(data){
+    console.log("user lefted")
+    console.log(data)
+    this.props.actions.deleteUser(data.name)
   }
 
   _userJoined(data){

@@ -2,7 +2,7 @@
  * @file questionsOperations
  * File to update store state based on called actions 
  */
-import { POST_MESSAGES ,ADD_USER,INIT_USER} from '../actions/actionTypes'
+import { POST_MESSAGES ,ADD_USER,INIT_USER,DELETE_USER} from '../actions/actionTypes'
 import emoji from 'node-emoji'
 
 var emojified = emoji.emojify('I :unknown_emoji: :star: :another_one:',function(name){return name});
@@ -19,6 +19,17 @@ const initialState = {
         duration: 2000,
         inbound: true
     }]
+}
+
+function removeA(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
 }
 
 export default function chatOperations(state = initialState, action) {
@@ -51,6 +62,15 @@ export default function chatOperations(state = initialState, action) {
             return{
                 ...state,
                 user:action.userlist
+            }
+        case DELETE_USER:
+            console.log("switch del user")
+            console.log(state.user)
+            var u=removeA(state.user,action.user)
+            console.log(u)
+            return{
+                ...state,
+                user:u
             }
         
         default:
