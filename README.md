@@ -5,8 +5,9 @@ See This Blog Post : [ReactJS and Socket.IO Chat Application](http://danialk.git
 ## Running it
 
 First, grab the dependencies:
-
+```
     npm install
+```
 
 Build the applicaiton
 	
@@ -14,6 +15,24 @@ Build the applicaiton
 
 Then run the app like so:
 
-    npm start
+```
+npm run start
+```
+```
+npm run electron
+```
+```
+npm run electron
+```
 
-And navigate to `localhost:3000` and chat !
+## Feature
+- emoji
+```
+:coffee: :boy: :girl: 
+```
+all supported emoji is at [here](https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json)
+
+- send file
+```
+plain text,image,
+```
