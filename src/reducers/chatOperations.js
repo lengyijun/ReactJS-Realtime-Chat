@@ -8,7 +8,7 @@ import emoji from 'node-emoji'
 var emojified = emoji.emojify('I :unknown_emoji: :star: :another_one:',function(name){return name});
 
 const initialState = {
-    user: [],
+    user: ['BroadCast'],
     message: [{
         message: emojified,
         // message: 'How do I use this messaging app?',
@@ -59,9 +59,10 @@ export default function chatOperations(state = initialState, action) {
             }
         case INIT_USER:
             console.log("switch init user")
+            var user_origin=state.user
             return{
                 ...state,
-                user:action.userlist
+                user:user_origin.concat(action.userlist)
             }
         case DELETE_USER:
             console.log("switch del user")
