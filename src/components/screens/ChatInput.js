@@ -29,7 +29,7 @@ export default class ChatInput extends Component {
      * @param {*} event 
      */ 
     handlePostClick(event){
-        this.props.actions.postMessage(this.state.messageValue,"http://res.cloudinary.com/technoetics/image/upload/v1491538348/technoetics/profilepenguin.png")
+        this.props.actions.postMessage(this.state.messageValue,"http://res.cloudinary.com/technoetics/image/upload/v1491538348/technoetics/profilepenguin.png",false)
         socket.emit("send:message",this.state.messageValue+"=="+this.state.clickedItemText)
     }
 

@@ -11,8 +11,7 @@ const initialState = {
     user: ['BroadCast'],
     message: [{
         message: emojified,
-        // message: 'How do I use this messaging app?',
-        from: 'right',
+        from: 'left',
         backColor: '#3d83fa',
         textColor: "white",
         avatar: 'http://res.cloudinary.com/technoetics/image/upload/v1491538348/technoetics/profilepenguin.png',
@@ -42,13 +41,12 @@ export default function chatOperations(state = initialState, action) {
                 ...state,
                 message:[...state.message,{
                     message:a,
-                    // message:state.message,
-                    from: 'right',
+                    from:"left",
                     backColor: "green",
                     textColor: "white",
                     avatar: action.avatar,
                     duration: 2000,
-                    inbound: false
+                    inbound:action.from
                 }]
             }
         case ADD_USER:

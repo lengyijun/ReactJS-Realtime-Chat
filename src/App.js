@@ -42,7 +42,7 @@ class App extends Component {
     console.log("============")
     console.log(message)
     console.log(this.props.actions.postMessage)
-    this.props.actions.postMessage(JSON.stringify(message),"http://res.cloudinary.com/technoetics/image/upload/v1491538348/technoetics/profilepenguin.png")
+    this.props.actions.postMessage(JSON.stringify(message),"http://res.cloudinary.com/technoetics/image/upload/v1491538348/technoetics/profilepenguin.png",true)
   }
 
   base64toBlob (b64Data, contentType, sliceSize) {
