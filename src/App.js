@@ -10,6 +10,7 @@ import socket from './socket.js'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as messageActions from './actions';
+import FileSaver from 'file-saver'
 
 class App extends Component {
   constructor(props){
@@ -19,6 +20,7 @@ class App extends Component {
     console.log(this.props.globalstate)
 		socket.on('init', this._initialize.bind(this));
 		socket.on('send:message', this._messageRecieve.bind(this));
+		socket.on('send:file', this._fileRecieve.bind(this));
 		socket.on('user:join', this._userJoined.bind(this));
 		socket.on('user:left', this._userLeft.bind(this));
 		// socket.on('change:name', this._userChangedName.bind(this));
@@ -42,6 +44,45 @@ class App extends Component {
     console.log(this.props.actions.postMessage)
     this.props.actions.postMessage(JSON.stringify(message),"http://res.cloudinary.com/technoetics/image/upload/v1491538348/technoetics/profilepenguin.png")
   }
+
+  base64toBlob (b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i=0; i<slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+}
+
+  _fileRecieve(data){
+    console.log("receive file")
+    var d=JSON.parse(data,(k,v)=>{return v})
+    var b=d.content.split(",")
+    console.log(b)
+    if(d.type in ['txt','md','js','c','cpp']){
+      var blob = new Blob([d.content], {type: "text/plain;charset=utf-8"});
+      FileSaver.saveAs(blob, d.title);
+    }else{
+      var blob = this.base64toBlob(b[1], b[0].split(';')[0].split(":")[1]) 
+      // var blob = this.base64toBlob(b[1], 'image/jpeg') 
+      FileSaver.saveAs(blob,d.title)
+    }
+  }
+
   _initialize(data){
     console.log("initial")
     console.log(data)

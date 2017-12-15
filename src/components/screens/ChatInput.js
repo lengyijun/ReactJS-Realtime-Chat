@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import './css/ChatInput.css';
 import socket from '../../socket.js'
+import FileSaver from 'file-saver'
+
 export default class ChatInput extends Component {
     constructor(props) {
         super(props);
@@ -46,6 +48,29 @@ export default class ChatInput extends Component {
             this.state.clickedItemText=b.textContent
         }
     }
+    handleClick(event){
+        console.log(event.target.value)
+        var title=event.target.value.split('\\').slice(-1).pop()  //只取到文件名，而不要路径
+        var type= title.split('.').slice(-1).pop()
+        console.log(title)
+        var reader=new FileReader();
+        reader.onload=function(){
+          var content=reader.result
+          console.log("======")
+          console.log(content)
+          socket.emit("send:file",JSON.stringify({
+              title:title,
+              content:content,
+              to:"",
+              type:type
+          }))
+        }
+        if(type in ['txt','md','js','c','cpp']){
+            reader.readAsText(event.target.files[0])
+        }else{
+            reader.readAsDataURL(event.target.files[0])
+        }
+    }
 
     render() {
         return (
@@ -62,6 +87,7 @@ export default class ChatInput extends Component {
                     onChange={(event) => this.handleChatMessage(event)} />
                 <br />
                 <Button bsStyle="primary" onClick={(event) => this.handlePostClick(event)}>Post</Button>
+                <input type="file" id="tohidinput" name="files[]" onChange={this.handleClick.bind(this)} />
                 <div className='users'>
                                 <h3> Online Users </h3>
                                 <ul className="userlist">

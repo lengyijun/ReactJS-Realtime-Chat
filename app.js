@@ -97,15 +97,22 @@ function (socket) {
     var a=data.split("==")
     console.log(a)
     if (a[1] === "BroadCast" || a[1]=="") {
-      socket.broadcast.emit('send:message', {
-        user: name,
-        text: data.text
-      });
+      socket.broadcast.emit('send:message', JSON.stringify({
+        text:a[0],
+        from: name,
+      })
+    );
     }
     else{
       io.sockets.connected[client[a[1]]].emit('send:message',a[0])
     }
   });
+
+  socket.on('send:file',function(data){
+    console.log("send file")
+    console.log(data)
+    socket.broadcast.emit("send:file",data)
+  })
 
   // validate a user's name change, and broadcast it on success
   socket.on('change:name', function (data, fn) {
