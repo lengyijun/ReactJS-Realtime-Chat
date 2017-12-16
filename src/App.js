@@ -73,11 +73,18 @@ class App extends Component {
     var d=JSON.parse(data,(k,v)=>{return v})
     var b=d.content.split(",")
     console.log(b)
-    if(d.type in ['txt','md','js','c','cpp']){
+    if(['txt','md','js','c','cpp'].includes(d.type)){
       var blob = new Blob([d.content], {type: "text/plain;charset=utf-8"});
       FileSaver.saveAs(blob, d.title);
     }else{
       var blob = this.base64toBlob(b[1], b[0].split(';')[0].split(":")[1]) 
+
+      console.log(d.type)
+      if(['jpg','png','jpeg'].includes(d.type)){
+        var blobUrl=URL.createObjectURL(blob);
+        console.log(blobUrl)
+        this.props.actions.postMessage("new file","http://res.cloudinary.com/technoetics/image/upload/v1491538348/technoetics/profilepenguin.png",false,blobUrl)
+      }
       // var blob = this.base64toBlob(b[1], 'image/jpeg') 
       FileSaver.saveAs(blob,d.title)
     }

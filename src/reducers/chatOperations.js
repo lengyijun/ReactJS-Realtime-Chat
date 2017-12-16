@@ -46,7 +46,8 @@ export default function chatOperations(state = initialState, action) {
                     textColor: "white",
                     avatar: action.avatar,
                     duration: 2000,
-                    inbound:action.from
+                    inbound:action.from,
+                    src:action.url
                 }]
             }
         case ADD_USER:
